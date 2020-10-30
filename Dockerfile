@@ -1,28 +1,22 @@
-# Dockerfile para o Qualis
 FROM ubuntu:16.04
+MAINTAINER nicolasanelli
 
-# Configurando variáveis de ambiente
+# Setting environment vars
 ENV DEBIAN_FRONTEND noninteractive
 ENV LANG C.UTF-8
-ENV TZ=America/Sao_Paulo
 
-# Atualizando o repositório
+# Updating apt repo
 RUN apt-get update
 
-# Configurando o timezone
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
-    apt-get install -y tzdata && \
-    dpkg-reconfigure -f noninteractive tzdata
-
-# Instalando o repositório do ondrej para instalação do php56
+# Adding ondrej/php PPA for php5.6 version
 RUN apt-get install -y software-properties-common && \
     add-apt-repository ppa:ondrej/php && \
     apt-get update
 
-# Instalando ferramentas básicas
+# Installing common tools
 RUN apt-get install -y vim wget zip
 
-# Instalando o php-5.6
+# Installing PHP-5.6 and some extensions
 RUN apt-get install -y \
     php5.6 \
     php5.6-cgi \
@@ -40,30 +34,30 @@ RUN apt-get install -y \
     php5.6-zip \
     php-pear
 
-# Instalando pdftk
+# Installing PDFTK
 RUN apt-get install -y \
 	libgcj-common \
-    pdftk
+    	pdftk
 
-# Instalando o toolkit que contém o pdftotext
+# Installing poppler-utils (pdftotext)
 RUN apt-get install -y \
     poppler-utils
 
-# Instalando o apache server
+# Installing apache http server
 RUN apt-get install -y \
     apache2 \
     libapache2-mod-php5.6
 RUN a2enmod rewrite
 
-# Instalando ferramentas/binários legado
+# Installing legacy libs for oci and pdf manipulation
 RUN apt-get install -y \
     bc \
     libaio-dev
 
-# Removendo dados do apt-get para diminuir tamanho da imagem
+# Cleaning apt cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp*
 
-# Instalando o InstantCliente Oracle Conector
+# Installing instant-client Oracle Conector
 RUN mkdir -p /home/instant_client/
 COPY instant_client /home/instant_client
 RUN ln -sfn /home/instant_client/libclntsh.so.12.1 /home/instant_client/libclntsh.so && \
@@ -71,7 +65,7 @@ RUN ln -sfn /home/instant_client/libclntsh.so.12.1 /home/instant_client/libclnts
     echo 'extension=oci8.so' >> /etc/php/5.6/apache2/php.ini && \
     echo 'extension=oci8.so' >> /etc/php/5.6/cli/php.ini
 
-# Para auxiliar na criação do dockerfile
+# Helper index page
 RUN echo "<?php phpinfo(); ?>" >> /var/www/html/index.php
 RUN rm /var/www/html/index.html
 
