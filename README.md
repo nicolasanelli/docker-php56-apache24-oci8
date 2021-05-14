@@ -4,7 +4,7 @@ Image created based on [ubuntu/16.04](https://hub.docker.com/layers/ubuntu/libra
 
 The dockerhub repository can be found [here](https://hub.docker.com/repository/docker/nicolasanelli/php56-apache24-oci8).
 
-### Main ffeatures (tools)
+### Main features (tools)
 
 - Apache2.4
 - PHP 5.6
