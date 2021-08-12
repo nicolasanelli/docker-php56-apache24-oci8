@@ -1,4 +1,6 @@
-# Docker PHP 5.6, Apache 2.4, OCI8
+# <del>Docker PHP 5.6, Apache 2.4, OCI8</del>
+
+**Important: DEPRECATED**
 
 Image created based on [ubuntu/16.04](https://hub.docker.com/layers/ubuntu/library/ubuntu/16.04/images/sha256-8dcc8cd61c36a338d35662307ae2f23e00f407bae2281caf95e25550504eb001?context=explore).
 
